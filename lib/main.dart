@@ -4,7 +4,9 @@ import 'package:flutter_test_app_reddit_get_posts/presentation/screens/main_scre
 import 'package:http/http.dart' as http;
 
 import 'domain/api/api_client.dart';
+import 'logic/bloc/share/share_bloc.dart';
 import 'logic/cubit/post_loader_cubit.dart';
+import 'presentation/screens/post_details_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,15 +17,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PostLoaderCubit>(
-      create: (context) => PostLoaderCubit(HttpRequest())..loadPosts(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PostLoaderCubit>(
+          create: (context) => PostLoaderCubit(HttpRequest())..loadPosts(),
+        ),
+        BlocProvider(
+          create: (context) => ShareBloc()..add(SharePost()),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Test App Reddit Posts',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const  MainScreen(),
+        initialRoute: '/',
+        routes:  {
+          '/' :(context) => const MainScreen(),
+          '/details' :(context) => const PostDetailsScreen(),
+        },
       ),
     );
   }
