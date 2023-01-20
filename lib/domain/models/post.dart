@@ -4,8 +4,9 @@ import 'dart:convert';
 
 class PostsData {
   PostsData(
-      {required this.bodyText,
+      {this.bodyText,
       this.authorName,
+      this.link,
       this.title,
       this.ups,
       this.imageUrl,
@@ -13,6 +14,7 @@ class PostsData {
 
   String? bodyText;
   String? authorName;
+  String? link;
   String? title;
   int? ups;
   String? imageUrl;
@@ -21,6 +23,7 @@ class PostsData {
   factory PostsData.fromJson(Map<String, dynamic> json) => PostsData(
         bodyText: json['selftext'] as String?,
         authorName: json['author'] as String?,
+        link: json['url'] as String?,
         title: json['title'] as String?,
         ups: json['ups'] as int?,
         imageUrl: json['thumbnail'] as String?,
@@ -30,6 +33,7 @@ class PostsData {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'selftext': bodyText,
         'author': authorName,
+        'url' : link,
         'title': title,
         'ups': ups,
         'thumbnail': imageUrl,
