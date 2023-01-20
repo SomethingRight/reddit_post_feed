@@ -17,12 +17,13 @@ class MainScreen extends StatelessWidget {
         ),
         body: BlocBuilder<PostLoaderCubit, PostLoaderState>(
             builder: (context, state) {
-          if (state is PostLoading) {
+          if (state is PostLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is PostLoaded) {
+          } else if (state is PostLoadedState) {
             final posts = state.posts;
+            posts.forEach((element) => print(element.id),);
             return RefreshIndicator(
               onRefresh: () =>
                   Provider.of<PostLoaderCubit>(context, listen: false)
@@ -31,12 +32,7 @@ class MainScreen extends StatelessWidget {
                   itemCount: posts.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      onTap: () => Navigator.push<PostLoaderCubit>(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PostDetailsScreen(
-                                    post: posts[index],
-                                  ))),
+                      onTap: () => Navigator.pushNamed(context, '/details', arguments: posts[index].id),
                       child: PostWidget(post: posts[index]),
                     );
                   }),
@@ -48,5 +44,3 @@ class MainScreen extends StatelessWidget {
         }));
   }
 }
-
-
