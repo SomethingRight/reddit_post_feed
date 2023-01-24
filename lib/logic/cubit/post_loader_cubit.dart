@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/api/api_client.dart';
+import '../../domain/api/api_posts.dart';
 import '../../domain/models/post.dart';
 
 part 'post_loader_state.dart';

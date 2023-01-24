@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test_app_reddit_get_posts/presentation/screens/main_screen.dart';
-import 'package:http/http.dart' as http;
-
-import 'domain/api/api_client.dart';
-import 'logic/bloc/post_bloc.dart';
+import 'domain/api/api_posts.dart';
 import 'logic/cubit/post_loader_cubit.dart';
+import 'presentation/screens/main_screen.dart';
 import 'presentation/screens/post_details_screen.dart';
 
 void main() {
@@ -30,9 +27,25 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         initialRoute: '/',
-        routes:  {
-          '/' :(context) => const MainScreen(),
-          '/details' :(context) => const PostDetailsScreen(),
+        onGenerateRoute: (RouteSettings settings) {
+          final dynamic arguments = settings.arguments;
+          final String? name = settings.name;
+          if (name == '/details') {
+            final String postId = arguments as String;
+            return MaterialPageRoute<dynamic>(
+                builder: (context) => PostDetailsScreen(
+                      postId: postId,
+                    ));
+          } else if (name == '/') {
+            return MaterialPageRoute<dynamic>(
+                builder: (context) => const MainScreen());
+          }
+          return MaterialPageRoute<dynamic>(
+              builder: (context) => const Scaffold(
+                    body: Center(
+                      child: Text('wrong route'),
+                    ),
+                  ));
         },
       ),
     );

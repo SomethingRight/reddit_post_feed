@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 // "data(PostData)" -> "children(Child)" -> "data(ChildData)" -> "title" , "ups", "thumbnail", "author", "selftext"
 
-class PostsData {
+// ignore: must_be_immutable
+class PostsData extends Equatable{
   PostsData(
       {this.bodyText,
       this.authorName,
@@ -39,4 +42,8 @@ class PostsData {
         'thumbnail': imageUrl,
         'thumbnail_height': isImage,
       };
+      
+        @override
+        // TODO: implement props
+        List<Object?> get props => [id, title, bodyText, isImage, imageUrl, authorName, ups];
 }
