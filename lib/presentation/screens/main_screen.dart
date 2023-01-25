@@ -34,7 +34,7 @@ class MainScreen extends StatelessWidget {
                     return InkWell(
                       onTap: () => Navigator.pushNamed(context, '/details', 
 
-                      arguments: posts[index].id 
+                      arguments: posts[index].link 
                       ),
                       child: PostWidget(post: posts[index]),
                     );

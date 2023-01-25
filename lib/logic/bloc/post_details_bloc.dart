@@ -1,33 +1,31 @@
 import 'package:rxdart/rxdart.dart';
-import '../../domain/api/repositiry_posts.dart';
-import '../../domain/models/post.dart';
+import '../../domain/api/api_post_details.dart';
+import '../../domain/models/post_details.dart';
 
 class PostDetailsBloc {
-  PostDetailsBloc() {
-    getPostNew();
+  PostDetailsBloc(this.postLinked) {
+    getPost();
   }
 
-  final RepositoryPosts _repository = RepositoryPosts();
-  final BehaviorSubject<PostsData> _subject = BehaviorSubject<PostsData>();
+  final HttpPostDetailsRequest _repository = HttpPostDetailsRequest();
+  final BehaviorSubject<PostsDetailsData> _subject = BehaviorSubject<PostsDetailsData>();
 
-  void getPostNew() {
-    _repository.getAllPosts().then((List<PostsData> postsList) {
-      postsList.forEach((element) {
-        if (postId == element.id) {
-          return  _subject.sink.add(element);
-        }
+  void getPost() {
+    print(postLinked);
+    _repository.getPostDetails(postLinked)
+    .then((PostsDetailsData postData) {
+      _subject.sink.add(postData);
       });
-    });
   }
 
-  void setPostId(String postId){
-    this.postId = postId;
-  }
+  // void setPostLink(String postLink){
+  //   postLinked = postLink;
+  // }
 
   void dispose() {
     _subject.close();
   }
 
-  BehaviorSubject<PostsData> get subject => _subject;
-  late String postId;
+  BehaviorSubject<PostsDetailsData> get subject => _subject;
+  String postLinked;
 }

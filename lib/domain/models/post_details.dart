@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 // "data(PostData)" -> "children(Child)" -> "data(ChildData)" -> "title" , "ups", "thumbnail", "author", "selftext"
 
 // ignore: must_be_immutable
-class PostsData extends Equatable{
-  PostsData(
+class PostsDetailsData extends Equatable{
+  PostsDetailsData(
       {this.bodyText,
       this.authorName,
       this.id,
@@ -23,12 +23,12 @@ class PostsData extends Equatable{
   String? imageUrl;
   int? isImage;
 
-  factory PostsData.fromJson(Map<String, dynamic> json) => PostsData(
+  factory PostsDetailsData.fromJson(Map<String, dynamic> json) => PostsDetailsData(
         bodyText: json['selftext'] as String?,
         authorName: json['author'] as String?,
         id: json['id'] as String?,
         title: json['title'] as String?,
-        link: json['permalink'] as String?,
+        link: json['url'] as String?,
         imageUrl: json['thumbnail'] as String?,
         isImage: json['thumbnail_height'] as int?,
       );

@@ -31,10 +31,10 @@ class MyApp extends StatelessWidget {
           final dynamic arguments = settings.arguments;
           final String? name = settings.name;
           if (name == '/details') {
-            final String postId = arguments as String;
+            final String postLink = arguments as String;
             return MaterialPageRoute<dynamic>(
                 builder: (context) => PostDetailsScreen(
-                      postId: postId,
+                      postLink: postLink,
                     ));
           } else if (name == '/') {
             return MaterialPageRoute<dynamic>(

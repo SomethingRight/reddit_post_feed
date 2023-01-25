@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../domain/api/repositiry_posts.dart';
 import '../../domain/models/post.dart';
+import '../../domain/models/post_details.dart';
 import '../../logic/bloc/post_details_bloc.dart';
 
 class PostDetailsScreen extends StatefulWidget {
 
-  const PostDetailsScreen({super.key, required this.postId});
-  final String postId;
+  const PostDetailsScreen({super.key, required this.postLink});
+  final String postLink;
 
   @override
   State<PostDetailsScreen> createState() => _PostDetailsScreenState();
@@ -18,40 +18,44 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   void initState() {
     super.initState();
 
-      
-    bloc = PostDetailsBloc();
-    bloc.setPostId(widget.postId);
+    bloc = PostDetailsBloc(widget.postLink);
+    //bloc.setPostLink(widget.postLink);
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: bloc.subject.stream,
-        initialData: PostsData(authorName: 'loading', bodyText: '',title: ''),
+        initialData: PostsDetailsData(authorName: '', bodyText: '',title: 'loading...', imageUrl: '', link: ''),
         builder: (context, snapshot) {
             if (snapshot.data == null) {
               return const Offstage();
             } 
               return Scaffold(
-                appBar: AppBar(
-                    title: Text(snapshot.data!.authorName.toString(),
-                        style: const TextStyle(fontSize: 20))),
+                appBar: AppBar(),
                 body: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            children: [
+                              Text('Posted by: ', style: TextStyle(fontSize: 20),),
+                              Text('${snapshot.data?.authorName}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
                           Text(
                             snapshot.data!.title.toString(),
                             style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
+                                fontSize: 24, fontWeight: FontWeight.w300),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          const SizedBox(height: 10),
+                          TextButton(onPressed: (){}, child: Text('${snapshot.data?.link}')),
+                          
                           if (snapshot.data!.isImage != null) ...[
                             SizedBox(
                                 width: 300,
