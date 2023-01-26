@@ -6,7 +6,7 @@ class PostsData {
   PostsData(
       {this.bodyText,
       this.authorName,
-      this.link,
+      this.id,
       this.title,
       this.ups,
       this.imageUrl,
@@ -14,7 +14,7 @@ class PostsData {
 
   String? bodyText;
   String? authorName;
-  String? link;
+  String? id;
   String? title;
   int? ups;
   String? imageUrl;
@@ -23,7 +23,7 @@ class PostsData {
   factory PostsData.fromJson(Map<String, dynamic> json) => PostsData(
         bodyText: json['selftext'] as String?,
         authorName: json['author'] as String?,
-        link: json['url'] as String?,
+        id: json['id'] as String?,
         title: json['title'] as String?,
         ups: json['ups'] as int?,
         imageUrl: json['thumbnail'] as String?,
@@ -33,7 +33,7 @@ class PostsData {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'selftext': bodyText,
         'author': authorName,
-        'url' : link,
+        'id' : id,
         'title': title,
         'ups': ups,
         'thumbnail': imageUrl,

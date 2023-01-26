@@ -7,12 +7,12 @@ abstract class PostLoaderState {
   final bool isLoaded;
 }
 
-class PostLoading extends PostLoaderState {
-  const PostLoading({super.isLoaded = false});
+class PostLoadingState extends PostLoaderState {
+  const PostLoadingState({super.isLoaded = false});
 }
 
-class PostLoaded extends PostLoaderState {
-  PostLoaded({super.isLoaded = true,required this.posts});
+class PostLoadedState extends PostLoaderState {
+  PostLoadedState({super.isLoaded = true,required this.posts});
 
   List<PostsData> posts;
 }

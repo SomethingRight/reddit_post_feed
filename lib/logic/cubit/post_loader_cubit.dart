@@ -6,12 +6,12 @@ import '../../domain/models/post.dart';
 part 'post_loader_state.dart';
 
 class PostLoaderCubit extends Cubit<PostLoaderState> {
-  PostLoaderCubit(this.request) : super(const PostLoading());
+  PostLoaderCubit(this.request) : super(const PostLoadingState());
   final HttpRequest request;
 
   Future<void> loadPosts() async {
-    emit(const PostLoading());
+    emit(const PostLoadingState());
     final response = await request.getPosts();
-    emit (PostLoaded(posts: response));
+    emit (PostLoadedState(posts: response));
   }
 }
