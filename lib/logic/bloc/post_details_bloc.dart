@@ -11,16 +11,11 @@ class PostDetailsBloc {
   final BehaviorSubject<PostsDetailsData> _subject = BehaviorSubject<PostsDetailsData>();
 
   void getPost() {
-    print(postLinked);
     _repository.getPostDetails(postLinked)
     .then((PostsDetailsData postData) {
       _subject.sink.add(postData);
       });
   }
-
-  // void setPostLink(String postLink){
-  //   postLinked = postLink;
-  // }
 
   void dispose() {
     _subject.close();

@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Reddit posts'),
+          title: Text('Reddit posts', style: Theme.of(context).textTheme.headline1,),
           centerTitle: true,
         ),
         body: BlocBuilder<PostLoaderCubit, PostLoaderState>(
