@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../config/theme.dart';
 import '../../domain/models/post_details.dart';
-import '../../logic/bloc/post_details_bloc.dart';
+import '../../logic/bloc/post_details_bloc/post_details_bloc.dart';
+import '../widgets/widgets.dart';
 
 class PostDetailsScreen extends StatefulWidget {
   const PostDetailsScreen({super.key, required this.postLink});
@@ -36,7 +38,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             return const Offstage();
           }
           return Scaffold(
-            appBar: AppBar(),
+            appBar: const CustomAppBar(title: '') ,
             body: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(
@@ -108,11 +110,11 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                       padding: const EdgeInsets.all(15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children:[
+                        children: [
                           const Icon(Icons.share),
                           Text(
                             'SHARE THIS POST',
-                            style:Theme.of(context).textTheme.headline2,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                         ],
                       ),

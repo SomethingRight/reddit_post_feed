@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import '../../logic/bloc/post_details_bloc.dart';
-import '../../logic/cubit/post_loader_cubit.dart';
-import '../widgets/post_widget.dart';
 
+import '../../logic/cubit/post_loader_cubit.dart';
+import '../widgets/widgets.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -12,10 +11,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Reddit posts', style: Theme.of(context).textTheme.headline1,),
-          centerTitle: true,
-        ),
+        appBar: const CustomAppBar(title: 'Reddit posts'),
         body: BlocBuilder<PostLoaderCubit, PostLoaderState>(
             builder: (context, state) {
           if (state is PostLoadingState) {
@@ -32,10 +28,8 @@ class MainScreen extends StatelessWidget {
                   itemCount: posts.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      onTap: () => Navigator.pushNamed(context, '/details', 
-
-                      arguments: posts[index].link 
-                      ),
+                      onTap: () => Navigator.pushNamed(context, '/details',
+                          arguments: posts[index].link),
                       child: PostWidget(post: posts[index]),
                     );
                   }),

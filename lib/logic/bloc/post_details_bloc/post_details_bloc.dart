@@ -1,6 +1,6 @@
 import 'package:rxdart/rxdart.dart';
-import '../../domain/api/api_post_details.dart';
-import '../../domain/models/post_details.dart';
+import '../../../domain/api/api_post_details.dart';
+import '../../../domain/models/post_details.dart';
 
 class PostDetailsBloc {
   PostDetailsBloc(this.postLinked) {
