@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../config/theme.dart';
 import '../../domain/models/post_details.dart';
 import '../../logic/bloc/post_details_bloc/post_details_bloc.dart';
+import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 import '../widgets/widgets.dart';
 
 class PostDetailsScreen extends StatefulWidget {
@@ -19,6 +21,8 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   @override
   void initState() {
     bloc = PostDetailsBloc(widget.postLink);
+    //TODO create method inside bloc , look at GetIT library , run app in web
+    // bloc.initBloc(widget.postLink);
 
     super.initState();
   }
@@ -38,90 +42,110 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             return const Offstage();
           }
           return Scaffold(
-            appBar: const CustomAppBar(title: '') ,
-            body: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            appBar: const CustomAppBar(title: ''),
+            body: BlocBuilder<SettingsBloc, SettingsState>(
+              builder: (context, state) {
+                return Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Posted by: ',
-                            style: Theme.of(context).textTheme.headline3,
+                          Row(
+                            children: [
+                              Text(
+                                'Posted by: ',
+                                style: appThemeData[state.theme]!
+                                    .textTheme
+                                    .headline3!
+                                    .copyWith(fontSize: state.newFontSize),
+                              ),
+                              Flexible(
+                                child: Text(
+                                  '${snapshot.data?.authorName}',
+                                  style: appThemeData[state.theme]!
+                                      .textTheme
+                                      .headline2!
+                                      .copyWith(fontSize: state.newFontSize),
+                                ),
+                              ),
+                            ],
                           ),
+                          const SizedBox(height: 20),
                           Text(
-                            '${snapshot.data?.authorName}',
-                            style: Theme.of(context).textTheme.headline2,
+                            snapshot.data!.title.toString(),
+                            style: appThemeData[state.theme]!
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(fontSize: state.newFontSize),
                           ),
+                          const SizedBox(height: 10),
+                          TextButton(
+                              onPressed: () async {
+                                final Uri url =
+                                    Uri.parse(snapshot.data?.link as String);
+
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url,
+                                      mode: LaunchMode.inAppWebView);
+                                }
+                              },
+                              child: Text(
+                                '${snapshot.data?.link}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              )),
+                          if (snapshot.data!.isImage != null) ...[
+                            SizedBox(
+                                width: 300,
+                                height: 200,
+                                child: Image.network(
+                                  snapshot.data!.imageUrl.toString(),
+                                  fit: BoxFit.cover,
+                                ))
+                          ],
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Text(snapshot.data!.bodyText.toString(),
+                              maxLines: 5,
+                              style: appThemeData[state.theme]!
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(fontSize: state.newFontSize)),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      Text(
-                        snapshot.data!.title.toString(),
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      const SizedBox(height: 10),
-                      TextButton(
-                          onPressed: () async {
-                            final Uri url =
-                                Uri.parse(snapshot.data?.link as String);
-
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(url,
-                                  mode: LaunchMode.inAppWebView);
-                            }
-                          },
-                          child: Text(
-                            '${snapshot.data?.link}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )),
-                      if (snapshot.data!.isImage != null) ...[
-                        SizedBox(
-                            width: 300,
-                            height: 200,
-                            child: Image.network(
-                              snapshot.data!.imageUrl.toString(),
-                              fit: BoxFit.cover,
-                            ))
-                      ],
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(snapshot.data!.bodyText.toString(),
-                          maxLines: 5,
-                          style: Theme.of(context).textTheme.bodyText1),
+                      InkWell(
+                        onTap: () {
+                          //  final String message = 'Share this link: ${post.link.toString()}';
+                          //  Share.share(message);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.black12,
+                          ),
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Icon(Icons.share),
+                              Text(
+                                'SHARE THIS POST',
+                                style: appThemeData[state.theme]!
+                                    .textTheme
+                                    .headline2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
-                  InkWell(
-                    onTap: () {
-                      //  final String message = 'Share this link: ${post.link.toString()}';
-                      //  Share.share(message);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black12,
-                      ),
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Icon(Icons.share),
-                          Text(
-                            'SHARE THIS POST',
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                );
+              },
             ),
           );
         });

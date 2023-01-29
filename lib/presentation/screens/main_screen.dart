@@ -11,7 +11,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'Reddit posts'),
+        appBar: const CustomAppBar(title: 'Reddit feed'),
         body: BlocBuilder<PostLoaderCubit, PostLoaderState>(
             builder: (context, state) {
           if (state is PostLoadingState) {

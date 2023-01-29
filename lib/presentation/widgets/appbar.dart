@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/theme.dart';
-import '../../logic/bloc/theme_bloc/theme_bloc.dart';
+import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key, required this.title});
@@ -9,13 +9,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
+    return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
         return AppBar(
           title: Text(title),
-          titleTextStyle: state.themeData.textTheme.headline1,
+          titleTextStyle: appThemeData[state.theme]!.textTheme.headline1,
+          //state.themeData.textTheme.headline1, old theme bloc
           centerTitle: true,
-          iconTheme: state.themeData.iconTheme,
+          iconTheme:  appThemeData[state.theme]!.iconTheme,
+          //state.themeData.iconTheme, old theme bloc
           actions: [
             IconButton(
                 onPressed: () => Navigator.pushNamed(context, '/settings'),

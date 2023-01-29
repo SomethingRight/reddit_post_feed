@@ -7,7 +7,7 @@ import '../presentation/screens/settings_screen.dart';
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final dynamic arguments = settings.arguments;
-    final String? name = settings.name;
+    final String name = settings.name!;
     if (name == '/settings') {
       return MaterialPageRoute<dynamic>(
           builder: (context) => const SettingsScreen());

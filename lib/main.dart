@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'config/app_router.dart';
 import 'config/theme.dart';
 import 'domain/api/api_posts.dart';
-import 'logic/bloc/theme_bloc/theme_bloc.dart';
+import 'logic/bloc/settings_bloc/settings_bloc.dart';
 import 'logic/cubit/post_loader_cubit.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
+
   runApp(const MyApp());
 }
 
@@ -22,15 +29,16 @@ class MyApp extends StatelessWidget {
           create: (context) => PostLoaderCubit(HttpRequest())..loadPosts(),
         ),
         BlocProvider(
-          create: (context) => ThemeBloc(),
+          create: (context) => SettingsBloc(),
         ),
       ],
-      child: BlocBuilder<ThemeBloc, ThemeState>(
+      child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Test App Reddit Posts',
-            theme: state.themeData,
+            
+            theme: appThemeData[state.theme],
             initialRoute: '/',
             onGenerateRoute: AppRouter.onGenerateRoute,
           );

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/theme.dart';
-import '../../logic/bloc/theme_bloc/theme_bloc.dart';
+import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -15,19 +15,15 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final double _value = 20;
-  bool _toggledColor = true;
-  bool _toggledLight = false;
-  bool _toggledDark = false;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(
+    return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             title: const Text('settings'),
-            titleTextStyle: textTheme().headline1,
-            iconTheme: state.themeData.iconTheme,
+            titleTextStyle: appThemeData[state.theme]!.textTheme.headline1,
+            iconTheme: appThemeData[state.theme]!.iconTheme,
           ),
           body: Padding(
             padding: const EdgeInsets.all(25.0),
@@ -37,51 +33,68 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Column(
                   children: [
                     Text('Сhoose an app theme:',
-                        style: state.themeData.textTheme.bodyText2),
+                        style: appThemeData[state.theme]!.textTheme.bodyText2),
                     SwitchListTile(
                         title: Text('Colored',
-                            style: state.themeData.textTheme.bodyText1),
-                        value: _toggledColor,
-                        activeColor: state.themeData.splashColor,
+                            style:
+                                appThemeData[state.theme]!.textTheme.bodyText1),
+                        value: toggledColor,
+                        activeColor: appThemeData[state.theme]!.splashColor,
+                        secondary: const Icon(Icons.color_lens),
+                        selected: toggledColor,
                         onChanged: (value) {
-                          Provider.of<ThemeBloc>(context, listen: false).add(
-                              const ThemeChanged(theme: AppTheme.colorTheme));
+                           setState(() {
+                          toggledColor = value ? true : false;
+                            toggledDark = !(toggledDark = true);
+                            toggledLight = !(toggledLight = true);
 
-                          setState(() {
-                            _toggledColor = value ? true : false;
-                            _toggledDark = !(_toggledDark = true);
-                            _toggledLight = !(_toggledLight = true);
+
+                          Provider.of<SettingsBloc>(context, listen: false).add(
+                              const ThemeChanged(
+                                  theme: AppTheme.colorTheme,
+                                  ));
                           });
                         }),
                     SwitchListTile(
                         title: Text('Light',
-                            style: state.themeData.textTheme.bodyText1),
-                        value: _toggledLight,
-                        activeColor: state.themeData.splashColor,
+                            style:
+                                appThemeData[state.theme]!.textTheme.bodyText1),
+                        value: toggledLight,
+                        activeColor: appThemeData[state.theme]!.splashColor,
+                        secondary: const Icon(Icons.light_mode),
+                        selected: toggledLight,
                         onChanged: (value) {
-                          Provider.of<ThemeBloc>(context, listen: false).add(
-                              const ThemeChanged(theme: AppTheme.lightTheme));
+                           setState(() {
+                            toggledColor = !(toggledColor = true);
+                            toggledLight = value ? true : false;
+                            toggledDark = !(toggledDark = true);
 
-                          setState(() {
-                            _toggledColor = !(_toggledColor = true);
-                            _toggledLight = value ? true : false;
-                            _toggledDark = !(_toggledDark = true);
+                          Provider.of<SettingsBloc>(context, listen: false).add(
+                              const ThemeChanged(
+                                  theme: AppTheme.lightTheme,
+                                  ));
                           });
                         }),
                     SwitchListTile(
                         title: Text('Dark',
-                            style: state.themeData.textTheme.bodyText1),
-                        value: _toggledDark,
-                        activeColor: state.themeData.splashColor,
+                            style:
+                                appThemeData[state.theme]!.textTheme.bodyText1),
+                        value: toggledDark,
+                        activeColor: appThemeData[state.theme]!.splashColor,
+                        selected: toggledDark,
+                        secondary: const Icon(Icons.dark_mode),
                         onChanged: (value) {
-                          Provider.of<ThemeBloc>(context, listen: false).add(
-                              const ThemeChanged(theme: AppTheme.darkTheme));
-
                           setState(() {
-                            _toggledColor = !(_toggledColor = true);
-                            _toggledLight = !(_toggledLight = true);
-                            _toggledDark = value ? true : false;
+                            toggledColor = !(toggledColor = true);
+                            toggledLight = !(toggledLight = true);
+                            toggledDark = value ? true : false;
                           });
+
+
+                          Provider.of<SettingsBloc>(context, listen: false).add(
+                             const  ThemeChanged(
+                                  theme: AppTheme.darkTheme,
+                                  ));
                         }),
                     const Divider(height: 5, thickness: 2.0),
                   ],
@@ -91,18 +104,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Column(
                     children: [
                       Slider(
-                          value: _value,
+                          value: initialFontSize,
                           min: 10.0,
                           max: 40.00,
                           divisions: 15,
-                          label: '${_value.round()}',
-                          onChanged: (value) {
+                          label: '${initialFontSize.round()}',
+                          onChanged: (double value) {
                             setState(() {
-                              value = _value;
+                              initialFontSize = value.roundToDouble();
+
+                              Provider.of<SettingsBloc>(context, listen: false)
+                                  .add(FontSizeChanged(fontSize: value));
                             });
                           }),
                       Text('Choose font size',
-                          style: state.themeData.textTheme.bodyText2),
+                          style: appThemeData[state.theme]!
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(fontSize: initialFontSize)),
                     ],
                   ),
                 ),
