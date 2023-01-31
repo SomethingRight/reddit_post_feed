@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'config/app_router.dart';
+import 'config/settings_storage.dart';
 import 'config/theme.dart';
 import 'domain/api/api_posts.dart';
 import 'logic/bloc/settings_bloc/settings_bloc.dart';
@@ -11,9 +10,8 @@ import 'logic/cubit/post_loader_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SettingsStorage.init();
 
-  HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: await getApplicationDocumentsDirectory());
 
   runApp(const MyApp());
 }
@@ -37,7 +35,6 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Test App Reddit Posts',
-            
             theme: appThemeData[state.theme],
             initialRoute: '/',
             onGenerateRoute: AppRouter.onGenerateRoute,

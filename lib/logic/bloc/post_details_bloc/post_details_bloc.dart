@@ -7,14 +7,18 @@ class PostDetailsBloc {
     getPost();
   }
 
+    void init(String postLinked){
+     PostDetailsBloc(postLinked);
+  }
+
   final HttpPostDetailsRequest _repository = HttpPostDetailsRequest();
-  final BehaviorSubject<PostsDetailsData> _subject = BehaviorSubject<PostsDetailsData>();
+  final BehaviorSubject<PostsDetailsData> _subject =
+      BehaviorSubject<PostsDetailsData>();
 
   void getPost() {
-    _repository.getPostDetails(postLinked)
-    .then((PostsDetailsData postData) {
+    _repository.getPostDetails(postLinked).then((PostsDetailsData postData) {
       _subject.sink.add(postData);
-      });
+    });
   }
 
   void dispose() {
@@ -22,5 +26,5 @@ class PostDetailsBloc {
   }
 
   BehaviorSubject<PostsDetailsData> get subject => _subject;
-  String postLinked;
+  late String postLinked;
 }

@@ -14,10 +14,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         return AppBar(
           title: Text(title),
           titleTextStyle: appThemeData[state.theme]!.textTheme.headline1,
-          //state.themeData.textTheme.headline1, old theme bloc
           centerTitle: true,
           iconTheme:  appThemeData[state.theme]!.iconTheme,
-          //state.themeData.iconTheme, old theme bloc
           actions: [
             IconButton(
                 onPressed: () => Navigator.pushNamed(context, '/settings'),

@@ -8,6 +8,10 @@ import '../../logic/bloc/post_details_bloc/post_details_bloc.dart';
 import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 import '../widgets/widgets.dart';
 
+//TODO
+    //create method inside bloc ,
+    //look at GetIT library , run app in web
+
 class PostDetailsScreen extends StatefulWidget {
   const PostDetailsScreen({super.key, required this.postLink});
   final String postLink;
@@ -20,11 +24,10 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   late final PostDetailsBloc bloc;
   @override
   void initState() {
-    bloc = PostDetailsBloc(widget.postLink);
-    //TODO create method inside bloc , look at GetIT library , run app in web
-    // bloc.initBloc(widget.postLink);
-
     super.initState();
+    
+    //bloc.init(widget.postLink);
+    bloc = PostDetailsBloc(widget.postLink);
   }
 
   @override
@@ -96,6 +99,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                                 '${snapshot.data?.link}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: state.newFontSize),
                               )),
                           if (snapshot.data!.isImage != null) ...[
                             SizedBox(
@@ -131,12 +135,15 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              const Icon(Icons.share),
+                              Icon(
+                                Icons.share,
+                                color: appThemeData[state.theme]!.splashColor,
+                              ),
                               Text(
                                 'SHARE THIS POST',
                                 style: appThemeData[state.theme]!
                                     .textTheme
-                                    .headline2,
+                                    .headline4,
                               ),
                             ],
                           ),

@@ -1,8 +1,15 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter/material.dart';
+
+import 'settings_storage.dart';
 
 enum AppTheme { lightTheme, darkTheme, colorTheme }
 
-  double initialFontSize = 18;
+
+
+  double initialFontSize = SettingsStorage.readFontSize();
+  AppTheme initialTheme = ThemeEnam().themeColorLogicToEnum(SettingsStorage.readTheme());
   bool toggledColor = true;
   bool toggledLight = false;
   bool toggledDark = false;
@@ -24,7 +31,7 @@ final Map<AppTheme, ThemeData> appThemeData = {
     // Dark theme
   ),
   AppTheme.darkTheme: ThemeData(
-    primaryColor: Colors.black54,
+    primaryColor: Colors.grey,
     iconTheme: const IconThemeData(color: Colors.grey),
     splashColor: Colors.black,
     colorScheme: ColorScheme.fromSwatch(
@@ -60,6 +67,10 @@ TextTheme textTheme(Color currentColor) {
         color: currentColor,
         fontSize: initialFontSize,
         fontWeight: FontWeight.w300),
+    headline4: TextStyle(
+        color: currentColor,
+        fontSize: 24,
+        fontWeight: FontWeight.w400),
     bodyText1: TextStyle(
         color: currentColor,
         fontSize: initialFontSize + 2,
@@ -71,3 +82,52 @@ TextTheme textTheme(Color currentColor) {
   );
 }
 
+class ThemeEnam {
+   AppTheme themeColorLogicToEnum(String themeColorLogicStr) {
+    switch (themeColorLogicStr) {
+      case 'color_theme':
+        {
+          return AppTheme.colorTheme;
+        }
+      case 'dark_theme':
+        {
+          return AppTheme.darkTheme;
+        }
+      case 'light_theme':
+        {
+          return AppTheme.lightTheme;
+        }
+      default:
+        {
+          return AppTheme.colorTheme;
+        }
+    }
+  }
+
+  String themeColorLogicFromEnum(AppTheme appTheme) {
+    String? themeColorLogicStr;
+    switch (appTheme) {
+      case AppTheme.colorTheme:
+        {
+          themeColorLogicStr = 'color_theme';
+          break;
+        }
+
+      case AppTheme.darkTheme:
+        {
+          themeColorLogicStr = 'dark_theme';
+          break;
+        }
+      case AppTheme.lightTheme:
+        {
+          themeColorLogicStr = 'light_theme';
+          break;
+        }
+      default:
+        {
+          themeColorLogicStr = null;
+        }
+    }
+    return themeColorLogicStr!;
+  }
+}
