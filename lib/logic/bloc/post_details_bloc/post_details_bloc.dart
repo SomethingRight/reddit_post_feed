@@ -1,28 +1,28 @@
 import 'package:rxdart/rxdart.dart';
-import '../../../domain/api/api_post_details.dart';
+import '../../../domain/api/post_details_api.dart';
 import '../../../domain/models/post_details.dart';
 
+
 class PostDetailsBloc {
-  PostDetailsBloc(this.postLinked) {
-    getPost();
-  }
+  PostDetailsBloc({required this.repository});
 
-    void init(String postLinked){
-     PostDetailsBloc(postLinked);
-  }
-
-  final HttpPostDetailsRequest _repository = HttpPostDetailsRequest();
+  final PostDetailsApiI repository;
   final BehaviorSubject<PostsDetailsData> _subject =
       BehaviorSubject<PostsDetailsData>();
 
   void getPost() {
-    _repository.getPostDetails(postLinked).then((PostsDetailsData postData) {
+    repository.getPostDetails(postLinked).then((PostsDetailsData postData) {
       _subject.sink.add(postData);
     });
   }
 
   void dispose() {
     _subject.close();
+  }
+
+  void init(String postLinked){
+    this.postLinked = postLinked;
+     getPost();
   }
 
   BehaviorSubject<PostsDetailsData> get subject => _subject;

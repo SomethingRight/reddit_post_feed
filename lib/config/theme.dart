@@ -1,20 +1,23 @@
 // ignore_for_file: avoid_redundant_argument_values
 
 import 'package:flutter/material.dart';
-
 import 'settings_storage.dart';
 
 enum AppTheme { lightTheme, darkTheme, colorTheme }
 
-
-
-  double initialFontSize = SettingsStorage.readFontSize();
-  AppTheme initialTheme = ThemeEnam().themeColorLogicToEnum(SettingsStorage.readTheme());
-  bool toggledColor = true;
-  bool toggledLight = false;
-  bool toggledDark = false;
+// ignore: avoid_classes_with_only_static_members
+abstract class Variables {
+  static double initialFontSize = SettingsStorage.readFontSize();
+  static AppTheme initialTheme = ThemeEnam().themeColorToEnum(SettingsStorage.readTheme());
+  static bool toggledColor = true;
+  static bool toggledLight = false;
+  static bool toggledDark = false;
+}
+  
 
 final Map<AppTheme, ThemeData> appThemeData = {
+
+  
   // Light theme
   AppTheme.lightTheme: ThemeData(
     primaryColor: Colors.white,
@@ -24,7 +27,7 @@ final Map<AppTheme, ThemeData> appThemeData = {
       primarySwatch: Colors.blue,
       brightness: Brightness.light,
     ),
-    textTheme: textTheme(Colors.black).copyWith(
+    textTheme: textThemeData(Colors.black).copyWith(
         headline1: const TextStyle(
             color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500)),
 
@@ -38,7 +41,7 @@ final Map<AppTheme, ThemeData> appThemeData = {
       primarySwatch: Colors.grey,
       brightness: Brightness.dark,
     ),
-    textTheme: textTheme(Colors.white),
+    textTheme: textThemeData(Colors.white),
 
     // Color theme
   ),
@@ -51,21 +54,21 @@ final Map<AppTheme, ThemeData> appThemeData = {
       brightness: Brightness.light,
     ),
     scaffoldBackgroundColor: Colors.grey.shade100,
-    textTheme: textTheme(Colors.black),
+    textTheme: textThemeData(Colors.black),
   )
 };
 
-TextTheme textTheme(Color currentColor) {
+TextTheme textThemeData(Color currentColor) {
   return TextTheme(
     headline1: TextStyle(
         color: currentColor, fontSize: 24, fontWeight: FontWeight.w500),
     headline2: TextStyle(
         color: currentColor,
-        fontSize: initialFontSize + 4,
+        fontSize: Variables.initialFontSize + 4,
         fontWeight: FontWeight.w600),
     headline3: TextStyle(
         color: currentColor,
-        fontSize: initialFontSize,
+        fontSize: Variables.initialFontSize,
         fontWeight: FontWeight.w300),
     headline4: TextStyle(
         color: currentColor,
@@ -73,18 +76,18 @@ TextTheme textTheme(Color currentColor) {
         fontWeight: FontWeight.w400),
     bodyText1: TextStyle(
         color: currentColor,
-        fontSize: initialFontSize + 2,
+        fontSize: Variables.initialFontSize + 2,
         fontWeight: FontWeight.normal),
     bodyText2: TextStyle(
         color: currentColor,
-        fontSize: initialFontSize + 4,
+        fontSize: Variables.initialFontSize + 4,
         fontWeight: FontWeight.normal),
   );
 }
 
 class ThemeEnam {
-   AppTheme themeColorLogicToEnum(String themeColorLogicStr) {
-    switch (themeColorLogicStr) {
+   AppTheme themeColorToEnum(String themeColorStr) {
+    switch (themeColorStr) {
       case 'color_theme':
         {
           return AppTheme.colorTheme;
@@ -104,30 +107,30 @@ class ThemeEnam {
     }
   }
 
-  String themeColorLogicFromEnum(AppTheme appTheme) {
-    String? themeColorLogicStr;
+  String themeColorFromEnum(AppTheme appTheme) {
+    String? themeColorStr;
     switch (appTheme) {
       case AppTheme.colorTheme:
         {
-          themeColorLogicStr = 'color_theme';
+          themeColorStr = 'color_theme';
           break;
         }
 
       case AppTheme.darkTheme:
         {
-          themeColorLogicStr = 'dark_theme';
+          themeColorStr = 'dark_theme';
           break;
         }
       case AppTheme.lightTheme:
         {
-          themeColorLogicStr = 'light_theme';
+          themeColorStr = 'light_theme';
           break;
         }
       default:
         {
-          themeColorLogicStr = null;
+          themeColorStr = null;
         }
     }
-    return themeColorLogicStr!;
+    return themeColorStr!;
   }
 }

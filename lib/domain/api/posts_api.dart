@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 
 import '/domain/models/post.dart';
 
-class HttpRequest {
+class PostsApi implements PostsApiI{
+  @override
   Future<List<PostsData>> getPosts() async {
     final http.Response response =
         await http.get(Uri.parse('https://reddit.com/r/flutterdev/new.json'));
@@ -22,4 +23,8 @@ class HttpRequest {
       throw error;
     }
   }
+}
+
+abstract class PostsApiI {
+   Future<List<PostsData>> getPosts();
 }

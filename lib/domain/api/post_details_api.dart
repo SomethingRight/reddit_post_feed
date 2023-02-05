@@ -6,7 +6,9 @@ import '../models/post_details.dart';
 
 
 
-class HttpPostDetailsRequest {
+class PostDetailsApi implements PostDetailsApiI{
+
+  @override
   Future<PostsDetailsData> getPostDetails(String currentPostLink) async {
     final http.Response response =
         await http.get(Uri.parse('https://www.reddit.com$currentPostLink.json'));
@@ -23,4 +25,8 @@ class HttpPostDetailsRequest {
     }
   }
 
+}
+
+abstract class PostDetailsApiI {
+  Future<PostsDetailsData> getPostDetails(String currentPostLink);
 }

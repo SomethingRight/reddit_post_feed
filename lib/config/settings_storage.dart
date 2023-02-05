@@ -18,7 +18,7 @@ class SettingsStorage {
   static String readTheme() {
     final storage = _storage;
     final theme = storage.getString(Keys.themeKey);
-    return theme ?? ThemeEnam().themeColorLogicFromEnum(AppTheme.colorTheme);
+    return theme ?? ThemeEnam().themeColorFromEnum(AppTheme.colorTheme);
   }
 
   static Future<dynamic> setTheme(String theme) async {
@@ -27,7 +27,7 @@ class SettingsStorage {
   }
 
 
-  static double readFontSize() {
+    static double readFontSize() {
     final storage = _storage;
     final size = storage.getDouble(Keys.fontSizeKey);
     return size ?? 18;
