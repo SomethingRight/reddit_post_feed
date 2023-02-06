@@ -112,17 +112,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               .themeColorFromEnum(AppTheme.darkTheme));
                         }),
                     const Divider(height: 5, thickness: 2.0),
-                    // DropdownButton<String>(
-                    //     hint: const Text('Choose a language'),
-                    //     value: AppLocalizations.of(context)!.language,
-                    //     items:
-                    //      L10n.all
-                    //         .map((e) => DropdownMenuItem<String>(
-                    //             child: Text(e.languageCode)))
-                    //         .toList(),
-                    //     onChanged:(dynamic newValue) {
-                          
-                    //     }) 
                   ],
                 ),
                 Padding(
