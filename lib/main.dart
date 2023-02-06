@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'config/app_router.dart';
 import 'config/settings_storage.dart';
 import 'config/theme.dart';
-import 'domain/api/posts_api.dart';
 import 'injectable.dart';
+import 'l10n/l10n.dart';
 import 'logic/bloc/settings_bloc/settings_bloc.dart';
 import 'logic/cubit/post_loader_cubit.dart';
 
@@ -39,6 +41,11 @@ class MyApp extends StatelessWidget {
             theme: appThemeData[state.theme],
             initialRoute: '/',
             onGenerateRoute: AppRouter.onGenerateRoute,
+            supportedLocales: L10n.all,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate
+            ],
           );
         },
       ),

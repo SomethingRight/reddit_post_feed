@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/settings_storage.dart';
 import '../../config/theme.dart';
+import '../../l10n/l10n.dart';
 import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -23,7 +25,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         final settings = appThemeData[state.theme];
         return Scaffold(
           appBar: AppBar(
-            title: const Text('settings'),
+            title: Text(AppLocalizations.of(context)!.settings),
+            centerTitle: true,
             titleTextStyle: settings!.textTheme.headline1,
             iconTheme: settings.iconTheme,
           ),
@@ -34,10 +37,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Column(
                   children: [
-                    Text('Choose an app theme:',
+                    Text(AppLocalizations.of(context)!.chooseAnAppTheme,
                         style: settings.textTheme.headline4),
                     SwitchListTile(
-                        title: Text('Colored',
+                        title: Text(AppLocalizations.of(context)!.colored,
                             style: settings.textTheme.headline4),
                         value: Variables.toggledColor,
                         activeColor: settings.splashColor,
@@ -46,8 +49,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onChanged: (value) {
                           setState(() {
                             Variables.toggledColor = value ? true : false;
-                            Variables.toggledDark = !(Variables.toggledDark = true);
-                            Variables.toggledLight = !(Variables.toggledLight = true);
+                            Variables.toggledDark =
+                                !(Variables.toggledDark = true);
+                            Variables.toggledLight =
+                                !(Variables.toggledLight = true);
 
                             Provider.of<SettingsBloc>(context, listen: false)
                                 .add(const ThemeChanged(
@@ -59,17 +64,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         }),
                     SwitchListTile(
-                        title:
-                            Text('Light', style: settings.textTheme.headline4),
+                        title: Text(AppLocalizations.of(context)!.light,
+                            style: settings.textTheme.headline4),
                         value: Variables.toggledLight,
                         activeColor: settings.splashColor,
                         secondary: const Icon(Icons.light_mode),
                         selected: Variables.toggledLight,
                         onChanged: (value) {
                           setState(() {
-                            Variables.toggledColor = !(Variables.toggledColor = true);
+                            Variables.toggledColor =
+                                !(Variables.toggledColor = true);
                             Variables.toggledLight = value ? true : false;
-                            Variables.toggledDark = !(Variables.toggledDark = true);
+                            Variables.toggledDark =
+                                !(Variables.toggledDark = true);
 
                             Provider.of<SettingsBloc>(context, listen: false)
                                 .add(const ThemeChanged(
@@ -81,16 +88,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           });
                         }),
                     SwitchListTile(
-                        title:
-                            Text('Dark', style: settings.textTheme.headline4),
+                        title: Text(AppLocalizations.of(context)!.dark,
+                            style: settings.textTheme.headline4),
                         value: Variables.toggledDark,
                         activeColor: settings.splashColor,
                         selected: Variables.toggledDark,
                         secondary: const Icon(Icons.dark_mode),
                         onChanged: (value) {
                           setState(() {
-                            Variables.toggledColor = !(Variables.toggledColor = true);
-                            Variables.toggledLight = !(Variables.toggledLight = true);
+                            Variables.toggledColor =
+                                !(Variables.toggledColor = true);
+                            Variables.toggledLight =
+                                !(Variables.toggledLight = true);
                             Variables.toggledDark = value ? true : false;
                           });
 
@@ -103,6 +112,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               .themeColorFromEnum(AppTheme.darkTheme));
                         }),
                     const Divider(height: 5, thickness: 2.0),
+                    // DropdownButton<String>(
+                    //     hint: const Text('Choose a language'),
+                    //     value: AppLocalizations.of(context)!.language,
+                    //     items:
+                    //      L10n.all
+                    //         .map((e) => DropdownMenuItem<String>(
+                    //             child: Text(e.languageCode)))
+                    //         .toList(),
+                    //     onChanged:(dynamic newValue) {
+                          
+                    //     }) 
                   ],
                 ),
                 Padding(
@@ -117,7 +137,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           label: '${Variables.initialFontSize.round()}',
                           onChanged: (double value) {
                             setState(() {
-                            
                               Variables.initialFontSize = value.roundToDouble();
 
                               Provider.of<SettingsBloc>(context, listen: false)
@@ -126,7 +145,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               SettingsStorage.setFontSize(value);
                             });
                           }),
-                      Text('Choose font size',
+                      Text(AppLocalizations.of(context)!.chooseFontSize,
                           style: settings.textTheme.bodyText2!
                               .copyWith(fontSize: Variables.initialFontSize)),
                     ],

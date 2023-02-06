@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../logic/cubit/post_loader_cubit.dart';
@@ -11,7 +12,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'Reddit feed'),
+        appBar: CustomAppBar(title: AppLocalizations.of(context)!.redditFeed),
         body: BlocBuilder<PostLoaderCubit, PostLoaderState>(
             builder: (context, state) {
           if (state is PostLoadingState) {
@@ -36,7 +37,7 @@ class MainScreen extends StatelessWidget {
                   }),
             );
           } else {
-            final Error error = ArgumentError('Something went wrong!');
+            final Error error = ArgumentError(AppLocalizations.of(context)!.errorMessage);
             throw error;
           }
         }));

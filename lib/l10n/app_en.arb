@@ -1,0 +1,56 @@
+{
+    "language": "English",
+    "@language": {
+        "description": "The current Language"
+    },
+
+    "redditFeed": "Reddit feed",
+    "@reddit_feed": {
+        "description": "The name app"
+    },
+
+    "postedBy": "Posted by",
+    "@posted_by": {
+        "description": "Who is author"
+    },
+
+    "shareThisPost": "Share this post",
+    "@posted_by": {
+        "description": "You can share"
+    },
+
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings of the app"
+    },
+
+    "chooseAnAppTheme": "Choose an app theme",
+    "@choose_an_app_theme": {
+        "description": "You can choose a theme"
+    },
+
+    "colored": "Colored",
+    "@colored": {
+        "description": "Colored theme"
+    },
+
+    "light": "Light",
+    "@light": {
+        "description": "Light theme"
+    },
+
+    "dark": "Dark",
+    "@dark": {
+        "description": "Dark theme"
+    },
+
+    "chooseFontSize": "Choose font size",
+    "@choose_font_size": {
+        "description": "You can choose a font size"
+    },
+
+    "errorMessage": "Something went wrong",
+    "@choose_font_size": {
+        "description": "This is error message"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "language": "Русский",
+    "redditFeed": "Reddit лента",
+    "postedBy": "Опубликовано",
+    "shareThisPost": "Поделиться постом",
+    "settings": "Настройки",
+    "chooseAnAppTheme": "Выбери тему",
+    "colored": "Цветная",
+    "light": "Светлая",
+    "dark": "Темная",
+    "chooseFontSize": "Выбери размер шрифта",
+    "errorMessage": "Что-то пошло не так"
+}
