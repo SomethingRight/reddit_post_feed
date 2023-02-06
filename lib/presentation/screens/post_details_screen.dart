@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../config/theme.dart';
-
 import '../../domain/models/post_details.dart';
 
-import '../../locator.dart';
+import '../../injectable.dart';
 import '../../logic/bloc/post_details_bloc/post_details_bloc.dart';
 import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 import '../widgets/widgets.dart';
@@ -27,8 +26,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   void initState() {
     super.initState();
 
-    
-    bloc = locator.get<PostDetailsBloc>()..init(widget.postLink);
+    bloc = getIt.get<PostDetailsBloc>()..init(widget.postLink);
   }
 
   @override

@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
 import '../models/post_details.dart';
 
 
-
+@injectable
 class PostDetailsApi implements PostDetailsApiI{
 
   @override

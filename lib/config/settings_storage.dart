@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'theme.dart';
@@ -8,6 +9,7 @@ abstract class Keys {
 }
 
 // ignore: avoid_classes_with_only_static_members
+@injectable
 class SettingsStorage {
   static late SharedPreferences _storage;
 

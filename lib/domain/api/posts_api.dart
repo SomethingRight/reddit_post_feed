@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
 import '/domain/models/post.dart';
 
+@injectable
 class PostsApi implements PostsApiI{
   @override
   Future<List<PostsData>> getPosts() async {

@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'config/app_router.dart';
 import 'config/settings_storage.dart';
 import 'config/theme.dart';
-import 'locator.dart';
+import 'domain/api/posts_api.dart';
+import 'injectable.dart';
 import 'logic/bloc/settings_bloc/settings_bloc.dart';
 import 'logic/cubit/post_loader_cubit.dart';
 
@@ -12,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SettingsStorage.init();
 
-  setupLocator();
+  configureDependencies();
   runApp(const MyApp());
 }
 
@@ -24,10 +25,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PostLoaderCubit>(
-          create: (context) => locator.get<PostLoaderCubit>(),
+          create: (context) => getIt.get<PostLoaderCubit>(),
         ),
         BlocProvider(
-          create: (context) => locator.get<SettingsBloc>(),
+          create: (context) => getIt.get<SettingsBloc>(),
         ),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
