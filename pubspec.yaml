@@ -44,6 +44,8 @@ dependencies:
   rxdart: ^0.27.7
   equatable: ^2.0.5
   url_launcher: ^6.1.8
+  path_provider: ^2.0.12
+  shared_preferences: ^2.0.17
   
 
 dev_dependencies:

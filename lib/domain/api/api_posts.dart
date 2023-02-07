@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter_test_app_reddit_get_posts/domain/models/post.dart';
+
 import 'package:http/http.dart' as http;
+
+import '/domain/models/post.dart';
 
 class HttpRequest {
   Future<List<PostsData>> getPosts() async {
