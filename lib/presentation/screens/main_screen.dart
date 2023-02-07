@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import '../../logic/bloc/post_details_bloc.dart';
 import '../../logic/cubit/post_loader_cubit.dart';
 import '../widgets/post_widget.dart';
-import 'post_details_screen.dart';
+
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -23,7 +24,6 @@ class MainScreen extends StatelessWidget {
             );
           } else if (state is PostLoadedState) {
             final posts = state.posts;
-            posts.forEach((element) => print(element.id),);
             return RefreshIndicator(
               onRefresh: () =>
                   Provider.of<PostLoaderCubit>(context, listen: false)
@@ -32,7 +32,10 @@ class MainScreen extends StatelessWidget {
                   itemCount: posts.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      onTap: () => Navigator.pushNamed(context, '/details', arguments: posts[index].id),
+                      onTap: () => Navigator.pushNamed(context, '/details', 
+
+                      arguments: posts[index].link 
+                      ),
                       child: PostWidget(post: posts[index]),
                     );
                   }),
