@@ -8,19 +8,19 @@ class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final dynamic arguments = settings.arguments;
     final String name = settings.name!;
-    if (name == '/settings') {
-      return MaterialPageRoute<dynamic>(
-          builder: (context) => const SettingsScreen());
-    }
-    if (name == '/details') {
-      final String postLink = arguments as String;
-      return MaterialPageRoute<dynamic>(
-          builder: (context) => PostDetailsScreen(
-                postLink: postLink,
-              ));
-    } else if (name == '/') {
-      return MaterialPageRoute<dynamic>(
-          builder: (context) => const MainScreen());
+    switch (name) {
+      case '/settings':
+        return MaterialPageRoute<dynamic>(
+            builder: (context) => const SettingsScreen());
+      case '/details':
+        final String postLink = arguments as String;
+        return MaterialPageRoute<dynamic>(
+            builder: (context) => PostDetailsScreen(
+                  postLink: postLink,
+                ));
+      case '/':
+        return MaterialPageRoute<dynamic>(
+            builder: (context) => const MainScreen());
     }
     return MaterialPageRoute<dynamic>(
       builder: (context) => const Scaffold(

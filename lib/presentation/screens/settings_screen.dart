@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/settings_storage.dart';
 import '../../config/theme.dart';
+import '../../l10n/l10n.dart';
 import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -20,11 +22,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
+        final settings = appThemeData[state.theme];
         return Scaffold(
           appBar: AppBar(
-            title: const Text('settings'),
-            titleTextStyle: appThemeData[state.theme]!.textTheme.headline1,
-            iconTheme: appThemeData[state.theme]!.iconTheme,
+            title: Text(AppLocalizations.of(context)!.settings),
+            centerTitle: true,
+            titleTextStyle: settings!.textTheme.headline1,
+            iconTheme: settings.iconTheme,
           ),
           body: Padding(
             padding: const EdgeInsets.all(25.0),
@@ -33,21 +37,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Column(
                   children: [
-                    Text('Сhoose an app theme:',
-                        style: appThemeData[state.theme]!.textTheme.headline4),
+                    Text(AppLocalizations.of(context)!.chooseAnAppTheme,
+                        style: settings.textTheme.headline4),
                     SwitchListTile(
-                        title: Text('Colored',
-                            style:
-                                appThemeData[state.theme]!.textTheme.headline4),
-                        value: toggledColor,
-                        activeColor: appThemeData[state.theme]!.splashColor,
+                        title: Text(AppLocalizations.of(context)!.colored,
+                            style: settings.textTheme.headline4),
+                        value: Variables.toggledColor,
+                        activeColor: settings.splashColor,
                         secondary: const Icon(Icons.color_lens),
-                        selected: toggledColor,
+                        selected: Variables.toggledColor,
                         onChanged: (value) {
                           setState(() {
-                            toggledColor = value ? true : false;
-                            toggledDark = !(toggledDark = true);
-                            toggledLight = !(toggledLight = true);
+                            Variables.toggledColor = value ? true : false;
+                            Variables.toggledDark =
+                                !(Variables.toggledDark = true);
+                            Variables.toggledLight =
+                                !(Variables.toggledLight = true);
 
                             Provider.of<SettingsBloc>(context, listen: false)
                                 .add(const ThemeChanged(
@@ -55,22 +60,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ));
 
                             SettingsStorage.setTheme(ThemeEnam()
-                                .themeColorLogicFromEnum(AppTheme.colorTheme));
+                                .themeColorFromEnum(AppTheme.colorTheme));
                           });
                         }),
                     SwitchListTile(
-                        title: Text('Light',
-                            style:
-                                appThemeData[state.theme]!.textTheme.headline4),
-                        value: toggledLight,
-                        activeColor: appThemeData[state.theme]!.splashColor,
+                        title: Text(AppLocalizations.of(context)!.light,
+                            style: settings.textTheme.headline4),
+                        value: Variables.toggledLight,
+                        activeColor: settings.splashColor,
                         secondary: const Icon(Icons.light_mode),
-                        selected: toggledLight,
+                        selected: Variables.toggledLight,
                         onChanged: (value) {
                           setState(() {
-                            toggledColor = !(toggledColor = true);
-                            toggledLight = value ? true : false;
-                            toggledDark = !(toggledDark = true);
+                            Variables.toggledColor =
+                                !(Variables.toggledColor = true);
+                            Variables.toggledLight = value ? true : false;
+                            Variables.toggledDark =
+                                !(Variables.toggledDark = true);
 
                             Provider.of<SettingsBloc>(context, listen: false)
                                 .add(const ThemeChanged(
@@ -78,30 +84,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ));
 
                             SettingsStorage.setTheme(ThemeEnam()
-                                .themeColorLogicFromEnum(AppTheme.lightTheme));
+                                .themeColorFromEnum(AppTheme.lightTheme));
                           });
                         }),
                     SwitchListTile(
-                        title: Text('Dark',
-                            style:
-                                appThemeData[state.theme]!.textTheme.headline4),
-                        value: toggledDark,
-                        activeColor: appThemeData[state.theme]!.splashColor,
-                        selected: toggledDark,
+                        title: Text(AppLocalizations.of(context)!.dark,
+                            style: settings.textTheme.headline4),
+                        value: Variables.toggledDark,
+                        activeColor: settings.splashColor,
+                        selected: Variables.toggledDark,
                         secondary: const Icon(Icons.dark_mode),
                         onChanged: (value) {
                           setState(() {
-                            toggledColor = !(toggledColor = true);
-                            toggledLight = !(toggledLight = true);
-                            toggledDark = value ? true : false;
+                            Variables.toggledColor =
+                                !(Variables.toggledColor = true);
+                            Variables.toggledLight =
+                                !(Variables.toggledLight = true);
+                            Variables.toggledDark = value ? true : false;
                           });
 
                           Provider.of<SettingsBloc>(context, listen: false)
                               .add(const ThemeChanged(
                             theme: AppTheme.darkTheme,
                           ));
+
                           SettingsStorage.setTheme(ThemeEnam()
-                              .themeColorLogicFromEnum(AppTheme.darkTheme));
+                              .themeColorFromEnum(AppTheme.darkTheme));
                         }),
                     const Divider(height: 5, thickness: 2.0),
                   ],
@@ -111,14 +119,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Column(
                     children: [
                       Slider(
-                          value: initialFontSize,
+                          value: Variables.initialFontSize,
                           min: 10.0,
                           max: 40.00,
                           divisions: 15,
-                          label: '${initialFontSize.round()}',
+                          label: '${Variables.initialFontSize.round()}',
                           onChanged: (double value) {
                             setState(() {
-                              initialFontSize = value.roundToDouble();
+                              Variables.initialFontSize = value.roundToDouble();
 
                               Provider.of<SettingsBloc>(context, listen: false)
                                   .add(FontSizeChanged(fontSize: value));
@@ -126,11 +134,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               SettingsStorage.setFontSize(value);
                             });
                           }),
-                      Text('Choose font size',
-                          style: appThemeData[state.theme]!
-                              .textTheme
-                              .bodyText2!
-                              .copyWith(fontSize: initialFontSize)),
+                      Text(AppLocalizations.of(context)!.chooseFontSize,
+                          style: settings.textTheme.bodyText2!
+                              .copyWith(fontSize: Variables.initialFontSize)),
                     ],
                   ),
                 ),

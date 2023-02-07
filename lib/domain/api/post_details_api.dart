@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
 import '../models/post_details.dart';
 
 
+@injectable
+class PostDetailsApi implements PostDetailsApiI{
 
-class HttpPostDetailsRequest {
+  @override
   Future<PostsDetailsData> getPostDetails(String currentPostLink) async {
     final http.Response response =
         await http.get(Uri.parse('https://www.reddit.com$currentPostLink.json'));
@@ -23,4 +26,8 @@ class HttpPostDetailsRequest {
     }
   }
 
+}
+
+abstract class PostDetailsApiI {
+  Future<PostsDetailsData> getPostDetails(String currentPostLink);
 }

@@ -1,22 +1,23 @@
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import '../../../domain/api/api_post_details.dart';
+import '../../../domain/api/post_details_api.dart';
 import '../../../domain/models/post_details.dart';
 
+@injectable
 class PostDetailsBloc {
-  PostDetailsBloc(this.postLinked) {
-    getPost();
-  }
+  PostDetailsBloc({required this.repository});
 
-    void init(String postLinked){
-     PostDetailsBloc(postLinked);
-  }
-
-  final HttpPostDetailsRequest _repository = HttpPostDetailsRequest();
+  final PostDetailsApi repository;
   final BehaviorSubject<PostsDetailsData> _subject =
       BehaviorSubject<PostsDetailsData>();
 
+  void init(String postLinked) {
+    this.postLinked = postLinked;
+    getPost();
+  }
+
   void getPost() {
-    _repository.getPostDetails(postLinked).then((PostsDetailsData postData) {
+    repository.getPostDetails(postLinked).then((PostsDetailsData postData) {
       _subject.sink.add(postData);
     });
   }

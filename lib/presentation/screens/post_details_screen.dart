@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../config/theme.dart';
 import '../../domain/models/post_details.dart';
+
+import '../../injectable.dart';
 import '../../logic/bloc/post_details_bloc/post_details_bloc.dart';
 import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 import '../widgets/widgets.dart';
-
-//TODO
-    //create method inside bloc ,
-    //look at GetIT library , run app in web
 
 class PostDetailsScreen extends StatefulWidget {
   const PostDetailsScreen({super.key, required this.postLink});
@@ -25,9 +24,8 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    
-    //bloc.init(widget.postLink);
-    bloc = PostDetailsBloc(widget.postLink);
+
+    bloc = getIt.get<PostDetailsBloc>()..init(widget.postLink);
   }
 
   @override
@@ -35,11 +33,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
     return StreamBuilder(
         stream: bloc.subject.stream,
         initialData: PostsDetailsData(
-            authorName: '',
-            bodyText: '',
-            title: 'loading...',
-            imageUrl: '',
-            link: ''),
+            authorName: '', bodyText: '', title: '', imageUrl: '', link: ''),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return const Offstage();
@@ -59,7 +53,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                           Row(
                             children: [
                               Text(
-                                'Posted by: ',
+                                AppLocalizations.of(context)!.postedBy,
                                 style: appThemeData[state.theme]!
                                     .textTheme
                                     .headline3!
@@ -140,7 +134,9 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                                 color: appThemeData[state.theme]!.splashColor,
                               ),
                               Text(
-                                'SHARE THIS POST',
+                                AppLocalizations.of(context)!
+                                    .shareThisPost
+                                    .toUpperCase(),
                                 style: appThemeData[state.theme]!
                                     .textTheme
                                     .headline4,
