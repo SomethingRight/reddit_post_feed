@@ -16,7 +16,7 @@ import 'logic/cubit/post_loader_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options:  DefaultFirebaseOptions.currentPlatform,
   );
   await SettingsStorage.init();
 
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Reddit Feed',
+            title: 'Reddit feed',
             theme: appThemeData[state.theme],
             initialRoute: '/',
             onGenerateRoute: AppRouter.onGenerateRoute,

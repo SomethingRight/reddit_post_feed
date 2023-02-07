@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../../config/settings_storage.dart';
 import '../../config/theme.dart';
-import '../../l10n/l10n.dart';
 import '../../logic/bloc/settings_bloc/settings_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
