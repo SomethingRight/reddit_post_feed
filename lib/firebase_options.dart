@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -79,5 +76,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'reddit-feed-ac59a.appspot.com',
     iosClientId: '930203121601-juqrp2098vroerdhdf3b3o055mdiden3.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterTestAppRedditGetPosts',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyC3gUWN9zxy8Q_253TbBuJqbqq5063Q01E',
+    appId: '1:930203121601:web:9d1cf8db13ae5052e32140',
+    messagingSenderId: '930203121601',
+    projectId: 'reddit-feed-ac59a',
+    authDomain: 'reddit-feed-ac59a.firebaseapp.com',
+    storageBucket: 'reddit-feed-ac59a.appspot.com',
+    measurementId: 'G-CD07VLRVC2',
   );
 }

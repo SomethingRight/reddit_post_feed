@@ -1,11 +1,10 @@
-// ignore_for_file: avoid_redundant_argument_values
+// ignore_for_file: avoid_redundant_argument_values, avoid_classes_with_only_static_members
 
 import 'package:flutter/material.dart';
 import 'settings_storage.dart';
 
 enum AppTheme { lightTheme, darkTheme, colorTheme }
 
-// ignore: avoid_classes_with_only_static_members
 abstract class Variables {
   static double initialFontSize = SettingsStorage.readFontSize();
   static AppTheme initialTheme = ThemeEnam().themeColorToEnum(SettingsStorage.readTheme());
