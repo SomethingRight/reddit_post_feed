@@ -15,7 +15,7 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black12,
+      decoration:  const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Colors.black12,),
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -26,8 +26,7 @@ class PostWidget extends StatelessWidget {
             Text(
               '${post.title}',
               maxLines: 2,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headline3,
             ),
           ],
           const SizedBox(
